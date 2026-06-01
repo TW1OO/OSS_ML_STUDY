@@ -1,3 +1,19 @@
+!apt-get install -y -q fonts-nanum
+
+import matplotlib as mpl
+import matplotlib.font_manager as fm
+
+fm.fontManager.__init__()
+nanum_fonts = [
+    f for f in fm.findSystemFonts()
+    if 'Nanum' in f and 'Gothic' in f and 'Bold' not in f and 'Extra' not in f
+]
+if nanum_fonts:
+    fe = fm.FontEntry(fname=nanum_fonts[0], name='NanumGothic')
+    fm.fontManager.ttflist.insert(0, fe)
+    mpl.rcParams['font.family'] = 'NanumGothic'
+mpl.rcParams['axes.unicode_minus'] = False
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
