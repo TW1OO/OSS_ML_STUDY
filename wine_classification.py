@@ -28,7 +28,7 @@ import seaborn as sns
 wine = load_wine()
 X, y = wine.data, wine.target
 print(f"데이터 shape: X={X.shape}, y={y.shape}")
-print(f"클래스: {wine.target_names}")
+print(f"클래스: {class_names}")
 
 colors = ['#E74C3C', '#2ECC71', '#3498DB']
 
@@ -40,7 +40,7 @@ for cls in range(3):
     mask = y == cls
     plt.scatter(X_raw_2d[mask, 0], X_raw_2d[mask, 1],
                 c=colors[cls], marker='o', s=40,
-                edgecolors='k', linewidths=0.5, label=wine.target_names[cls])
+                edgecolors='k', linewidths=0.5, label=class_names[cls])
 plt.xlabel(f'PC1 ({var_raw[0]*100:.1f}%)')
 plt.ylabel(f'PC2 ({var_raw[1]*100:.1f}%)')
 plt.title('스케일링 이전 데이터 분포 (PCA 2D)')
@@ -72,7 +72,7 @@ model.fit(X_train_s, y_train)
 y_pred = model.predict(X_test_s)
 
 print(f"\nClassification Report:")
-print(classification_report(y_test, y_pred, target_names=wine.target_names))
+print(classification_report(y_test, y_pred, target_names=class_names))
 
 pca = PCA(n_components=2)
 X_train_2d = pca.fit_transform(X_train_s)
@@ -108,7 +108,7 @@ for cls in range(3):
                 c=colors[cls], marker='^', s=100, alpha=1.0, edgecolors='black', linewidths=0.8)
 
 # 범례: 클래스 색상
-class_patches = [mpatches.Patch(color=colors[i], label=wine.target_names[i]) for i in range(3)]
+class_patches = [mpatches.Patch(color=colors[i], label=class_names[i]) for i in range(3)]
 # 범례: 마커 종류
 train_handle = plt.Line2D([0], [0], marker='o', color='gray', label='Train', markersize=8,
                            markerfacecolor='gray', linestyle='None')
@@ -150,7 +150,7 @@ for cls in range(3):
     ax2.scatter(X_test_2d[incorrect, 0], X_test_2d[incorrect, 1],
                 c=colors[cls], marker='X', s=150, edgecolors='red',   linewidths=1.2, zorder=5)
 
-class_patches2 = [mpatches.Patch(color=colors[i], label=wine.target_names[i]) for i in range(3)]
+class_patches2 = [mpatches.Patch(color=colors[i], label=class_names[i]) for i in range(3)]
 ok_handle   = plt.Line2D([0], [0], marker='^', color='gray', label='정답', markersize=8,
                           markerfacecolor='gray', linestyle='None')
 err_handle  = plt.Line2D([0], [0], marker='X', color='gray', label='오답', markersize=9,
